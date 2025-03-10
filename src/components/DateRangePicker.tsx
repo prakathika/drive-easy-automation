@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { DateRange } from "react-day-picker";
 
 interface DateRangePickerProps {
   onChange: (dates: { from: Date | undefined; to: Date | undefined }) => void;
@@ -22,10 +23,10 @@ export function DateRangePicker({
   initialDateRange,
   disabled = false,
 }: DateRangePickerProps) {
-  const [date, setDate] = useState<{
-    from: Date | undefined;
-    to: Date | undefined;
-  }>(initialDateRange || { from: undefined, to: undefined });
+  const [date, setDate] = useState<DateRange>(initialDateRange || { 
+    from: undefined, 
+    to: undefined 
+  });
 
   useEffect(() => {
     if (initialDateRange) {
@@ -79,6 +80,7 @@ export function DateRangePicker({
               today.setHours(0, 0, 0, 0);
               return date < today;
             }}
+            className="p-3 pointer-events-auto"
           />
         </PopoverContent>
       </Popover>
