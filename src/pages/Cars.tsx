@@ -148,7 +148,7 @@ const Cars = () => {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedTransmission, setSelectedTransmission] = useState<string>("");
   const [selectedFuel, setSelectedFuel] = useState<string>("");
-  const [selectedSeats, setSelectedSeats] = useState<number | "">("");
+  const [selectedSeats, setSelectedSeats] = useState<number | null>(null);
   const [sortBy, setSortBy] = useState<string>("price-low");
   
   // Filter options
@@ -334,7 +334,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Transmission" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Transmission</SelectItem>
+                      <SelectItem value="transmission">Any Transmission</SelectItem>
                       {transmissionTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -350,7 +350,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Fuel Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Fuel Type</SelectItem>
+                      <SelectItem value="any">Any Fuel Type</SelectItem>
                       {fuelTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -369,7 +369,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Number of Seats" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Number of Seats</SelectItem>
+                      <SelectItem value="any">Any Number of Seats</SelectItem>
                       {seatOptions.map((option) => (
                         <SelectItem key={option} value={option.toString()}>{option} Seats</SelectItem>
                       ))}
