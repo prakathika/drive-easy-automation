@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { Mail, Lock, ArrowLeft } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -47,21 +49,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      {/* Back Button */}
-      <div className="container mx-auto px-4 pt-6">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={() => navigate("/")} 
-          className="flex items-center text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
-        </Button>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
       
-      <div className="flex-1 flex items-center justify-center p-4">
+      <div className="flex-1 flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
         <div className="w-full max-w-md">
           <div className="glass-card rounded-xl p-8 shadow-lg animate-scale-in">
             <div className="text-center mb-8">
@@ -118,15 +109,7 @@ const Login = () => {
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? (
-                  <span className="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </span>
-                ) : (
-                  "Sign in"
-                )}
+                {isLoading ? "Signing in..." : "Sign in"}
               </Button>
             </form>
 
@@ -178,6 +161,8 @@ const Login = () => {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
