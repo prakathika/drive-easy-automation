@@ -5,19 +5,16 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
 import { DateRangePicker } from "./DateRangePicker";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { db } from "@/firebase/config";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useAuth } from "@/hooks/useAuth";
+import { DateRange } from "react-day-picker";
 
 const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: string; pricePerDay: number }) => {
-  const [dateRange, setDateRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
-    from: undefined,
-    to: undefined,
-  });
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
   const [location, setLocation] = useState("Mumbai");
   const [totalDays, setTotalDays] = useState(1);
   const [totalPrice, setTotalPrice] = useState(pricePerDay);
@@ -27,7 +24,7 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
 
   // Calculate total days and price whenever date range changes
   useEffect(() => {
-    if (dateRange.from && dateRange.to) {
+    if (dateRange?.from && dateRange?.to) {
       const diffTime = Math.abs(dateRange.to.getTime() - dateRange.from.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       setTotalDays(diffDays || 1);
@@ -42,7 +39,7 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
       return;
     }
 
-    if (!dateRange.from || !dateRange.to) {
+    if (!dateRange?.from || !dateRange?.to) {
       toast.error("Please select pickup and return dates");
       return;
     }
@@ -133,7 +130,7 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
       <Button 
         className="w-full mt-6" 
         onClick={handleBooking}
-        disabled={loading || !dateRange.from || !dateRange.to}
+        disabled={loading || !dateRange?.from || !dateRange?.to}
       >
         {loading ? "Processing..." : "Book Now"}
       </Button>

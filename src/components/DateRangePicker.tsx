@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/popover";
 
 interface DateRangePickerProps {
-  value: DateRange;
-  onChange: (date: DateRange) => void;
+  value: DateRange | undefined;
+  onChange: (date: DateRange | undefined) => void;
   className?: string;
 }
 
@@ -58,6 +58,7 @@ export function DateRangePicker({
             selected={value}
             onSelect={onChange}
             numberOfMonths={2}
+            className="pointer-events-auto"
             disabled={(date) =>
               date < new Date(new Date().setHours(0, 0, 0, 0))
             }
