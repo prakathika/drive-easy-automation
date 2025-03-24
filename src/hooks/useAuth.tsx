@@ -71,11 +71,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signIn = async (email: string, password: string): Promise<void> => {
     try {
       setLoading(true);
+      // Handle authentication errors better
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("Sign in successful!");
     } catch (error: any) {
       console.error("Error signing in:", error);
-      toast.error(error.message || "Failed to sign in");
+      
+      // Provide more user-friendly error messages
+      let errorMessage = "Failed to sign in";
+      if (error.code === "auth/invalid-credential") {
+        errorMessage = "Invalid email or password. Please try again.";
+      } else if (error.code === "auth/user-not-found") {
+        errorMessage = "No account found with this email. Please sign up first.";
+      } else if (error.code === "auth/wrong-password") {
+        errorMessage = "Incorrect password. Please try again.";
+      } else if (error.code === "auth/invalid-email") {
+        errorMessage = "Invalid email format. Please check your email.";
+      }
+      
+      toast.error(errorMessage);
       throw error;
     } finally {
       setLoading(false);
@@ -105,7 +119,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       toast.success("Sign in successful!");
     } catch (error: any) {
       console.error("Error signing in with Google:", error);
-      toast.error(error.message || "Failed to sign in with Google");
+      
+      let errorMessage = "Failed to sign in with Google";
+      if (error.code === "auth/popup-closed-by-user") {
+        errorMessage = "Sign-in popup was closed. Please try again.";
+      }
+      
+      toast.error(errorMessage);
       throw error;
     } finally {
       setLoading(false);

@@ -9,7 +9,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCkQKa2opnixCJpzXPL-VNx_BdHCDDvX3U",
   authDomain: "car-rental-50277.firebaseapp.com",
   projectId: "car-rental-50277",
-  storageBucket: "car-rental-50277.firebasestorage.app",
+  storageBucket: "car-rental-50277.appspot.com", // Corrected storage bucket URL
   messagingSenderId: "570520746497",
   appId: "1:570520746497:web:3947f5a5833fc6ff5e9e00",
   measurementId: "G-2FJV0S37F1"

@@ -52,10 +52,12 @@ const Dashboard = () => {
     try {
       setLoading(true);
       const bookingsRef = collection(db, "bookings");
+      
+      // Use a simpler query without orderBy to avoid the composite index requirement
+      // We'll sort the results client-side instead
       const q = query(
         bookingsRef,
-        where("userId", "==", user?.uid),
-        orderBy("createdAt", "desc")
+        where("userId", "==", user?.uid)
       );
       
       const querySnapshot = await getDocs(q);
@@ -66,6 +68,15 @@ const Dashboard = () => {
           id: doc.id,
           ...doc.data()
         } as Booking);
+      });
+      
+      // Sort bookings by createdAt date (newest first) - client-side sorting
+      fetchedBookings.sort((a, b) => {
+        const dateA = a.createdAt instanceof Timestamp ? a.createdAt.toMillis() : 
+                     (a.createdAt instanceof Date ? a.createdAt.getTime() : 0);
+        const dateB = b.createdAt instanceof Timestamp ? b.createdAt.toMillis() : 
+                     (b.createdAt instanceof Date ? b.createdAt.getTime() : 0);
+        return dateB - dateA;
       });
       
       console.log("Fetched bookings:", fetchedBookings);

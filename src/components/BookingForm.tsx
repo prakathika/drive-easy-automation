@@ -47,6 +47,7 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
     try {
       setLoading(true);
       
+      // Create the booking data object
       const bookingData = {
         carId,
         carName,
@@ -63,6 +64,7 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
         currency: "INR"
       };
 
+      // Add the booking to Firestore
       const docRef = await addDoc(collection(db, "bookings"), bookingData);
       
       console.log("Booking created with ID:", docRef.id);
