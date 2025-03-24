@@ -40,6 +40,8 @@ const Register = () => {
       await signUp(email, password, name);
       navigate("/");
     } catch (error) {
+      console.error("Registration error:", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -50,6 +52,8 @@ const Register = () => {
       await signInWithGoogle();
       navigate("/");
     } catch (error) {
+      console.error("Google sign in error:", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -150,15 +154,7 @@ const Register = () => {
               </div>
 
               <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? (
-                  <span className="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </span>
-                ) : (
-                  "Create account"
-                )}
+                {isLoading ? "Creating account..." : "Create account"}
               </Button>
             </form>
 

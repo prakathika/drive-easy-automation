@@ -52,6 +52,7 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
         carName,
         userId: user.uid,
         userEmail: user.email,
+        userName: user.displayName || "Customer",
         pickupDate: dateRange.from,
         returnDate: dateRange.to,
         location,
@@ -59,10 +60,12 @@ const BookingForm = ({ carId, carName, pricePerDay }: { carId: string; carName: 
         totalPrice,
         status: "pending",
         createdAt: serverTimestamp(),
+        currency: "INR"
       };
 
-      await addDoc(collection(db, "bookings"), bookingData);
+      const docRef = await addDoc(collection(db, "bookings"), bookingData);
       
+      console.log("Booking created with ID:", docRef.id);
       toast.success("Booking successful! Check your dashboard for details.");
       navigate("/dashboard");
     } catch (error) {

@@ -58,6 +58,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       toast.success("Account created successfully!");
+      return userCredential;
     } catch (error: any) {
       console.error("Error signing up:", error);
       toast.error(error.message || "Failed to create account");
@@ -70,8 +71,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
       toast.success("Sign in successful!");
+      return result;
     } catch (error: any) {
       console.error("Error signing in:", error);
       toast.error(error.message || "Failed to sign in");
@@ -102,6 +104,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
 
       toast.success("Sign in successful!");
+      return userCredential;
     } catch (error: any) {
       console.error("Error signing in with Google:", error);
       toast.error(error.message || "Failed to sign in with Google");

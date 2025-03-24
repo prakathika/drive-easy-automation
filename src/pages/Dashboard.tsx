@@ -17,13 +17,17 @@ interface Booking {
   id: string;
   carId: string;
   carName: string;
-  pickupDate: Timestamp;
-  returnDate: Timestamp;
+  pickupDate: Timestamp | Date;
+  returnDate: Timestamp | Date;
   location: string;
   totalDays: number;
   totalPrice: number;
   status: "pending" | "confirmed" | "completed" | "cancelled";
-  createdAt: Timestamp;
+  createdAt: Timestamp | Date;
+  userId: string;
+  userEmail: string;
+  userName?: string;
+  currency?: string;
 }
 
 const Dashboard = () => {
@@ -64,6 +68,7 @@ const Dashboard = () => {
         } as Booking);
       });
       
+      console.log("Fetched bookings:", fetchedBookings);
       setBookings(fetchedBookings);
     } catch (error) {
       console.error("Error fetching bookings:", error);
@@ -111,6 +116,15 @@ const Dashboard = () => {
       case "cancelled": return <XCircle className="h-4 w-4" />;
       default: return <Clock className="h-4 w-4" />;
     }
+  };
+
+  const formatDate = (date: Timestamp | Date) => {
+    if (date instanceof Timestamp) {
+      return format(date.toDate(), "dd MMM yyyy");
+    } else if (date instanceof Date) {
+      return format(date, "dd MMM yyyy");
+    }
+    return "Invalid date";
   };
 
   if (authLoading) {
@@ -206,7 +220,7 @@ const Dashboard = () => {
                     <Calendar className="h-4 w-4 text-gray-500" />
                     <div>
                       <p className="text-sm text-gray-500">Pickup Date</p>
-                      <p>{booking.pickupDate ? format(booking.pickupDate.toDate(), "dd MMM yyyy") : "N/A"}</p>
+                      <p>{booking.pickupDate ? formatDate(booking.pickupDate) : "N/A"}</p>
                     </div>
                   </div>
                   
@@ -214,7 +228,7 @@ const Dashboard = () => {
                     <Calendar className="h-4 w-4 text-gray-500" />
                     <div>
                       <p className="text-sm text-gray-500">Return Date</p>
-                      <p>{booking.returnDate ? format(booking.returnDate.toDate(), "dd MMM yyyy") : "N/A"}</p>
+                      <p>{booking.returnDate ? formatDate(booking.returnDate) : "N/A"}</p>
                     </div>
                   </div>
                   
@@ -243,7 +257,7 @@ const Dashboard = () => {
                     <span className="capitalize">{booking.status}</span>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">
-                    {booking.createdAt && format(booking.createdAt.toDate(), "dd MMM yyyy")}
+                    {booking.createdAt && formatDate(booking.createdAt)}
                   </p>
                 </div>
                 

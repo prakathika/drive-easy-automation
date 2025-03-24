@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import { Mail, Lock, ArrowLeft } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -34,6 +34,8 @@ const Login = () => {
       await signIn(email, password);
       navigate(from);
     } catch (error) {
+      console.error("Login error:", error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -44,6 +46,8 @@ const Login = () => {
       await signInWithGoogle();
       navigate(from);
     } catch (error) {
+      console.error("Google sign in error:", error);
+    } finally {
       setIsLoading(false);
     }
   };
