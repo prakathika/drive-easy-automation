@@ -8,7 +8,8 @@ import {
   onAuthStateChanged,
   updateProfile,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  UserCredential
 } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return unsubscribe;
   }, []);
 
-  const signUp = async (email: string, password: string, name: string) => {
+  const signUp = async (email: string, password: string, name: string): Promise<void> => {
     try {
       setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -58,7 +59,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
 
       toast.success("Account created successfully!");
-      return userCredential;
     } catch (error: any) {
       console.error("Error signing up:", error);
       toast.error(error.message || "Failed to create account");
@@ -68,12 +68,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string): Promise<void> => {
     try {
       setLoading(true);
-      const result = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       toast.success("Sign in successful!");
-      return result;
     } catch (error: any) {
       console.error("Error signing in:", error);
       toast.error(error.message || "Failed to sign in");
@@ -83,7 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (): Promise<void> => {
     try {
       setLoading(true);
       const provider = new GoogleAuthProvider();
@@ -104,7 +103,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
 
       toast.success("Sign in successful!");
-      return userCredential;
     } catch (error: any) {
       console.error("Error signing in with Google:", error);
       toast.error(error.message || "Failed to sign in with Google");
@@ -114,7 +112,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const logout = async () => {
+  const logout = async (): Promise<void> => {
     try {
       setLoading(true);
       await signOut(auth);

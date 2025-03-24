@@ -251,7 +251,7 @@ const Cars = () => {
     setSelectedTypes([]);
     setSelectedTransmission("");
     setSelectedFuel("");
-    setSelectedSeats("");
+    setSelectedSeats(null);
     setSortBy("price-low");
   };
 
@@ -334,7 +334,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Transmission" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="transmission">Any Transmission</SelectItem>
+                      <SelectItem value="">Any Transmission</SelectItem>
                       {transmissionTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -350,7 +350,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Fuel Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="any">Any Fuel Type</SelectItem>
+                      <SelectItem value="">Any Fuel Type</SelectItem>
                       {fuelTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -363,13 +363,13 @@ const Cars = () => {
                   <Label className="text-sm font-medium mb-2 block">Seats</Label>
                   <Select 
                     value={selectedSeats ? selectedSeats.toString() : ""} 
-                    onValueChange={(value) => setSelectedSeats(value ? parseInt(value) : "")}
+                    onValueChange={(value) => setSelectedSeats(value ? parseInt(value) : null)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Any Number of Seats" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="any">Any Number of Seats</SelectItem>
+                      <SelectItem value="">Any Number of Seats</SelectItem>
                       {seatOptions.map((option) => (
                         <SelectItem key={option} value={option.toString()}>{option} Seats</SelectItem>
                       ))}
