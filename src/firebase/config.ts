@@ -6,15 +6,14 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCkQKa2opnixCJpzXPL-VNx_BdHCDDvX3U",
-  authDomain: "car-rental-50277.firebaseapp.com",
-  projectId: "car-rental-50277",
-  storageBucket: "car-rental-50277.appspot.com", // Corrected storage bucket URL
-  messagingSenderId: "570520746497",
-  appId: "1:570520746497:web:3947f5a5833fc6ff5e9e00",
-  measurementId: "G-2FJV0S37F1"
+  apiKey: "AIzaSyA43LUPb5Kkpmlyrm4iaghfJZeZMrRNKE0",
+  authDomain: "driver-90447.firebaseapp.com",
+  projectId: "driver-90447",
+  storageBucket: "driver-90447.firebasestorage.app",
+  messagingSenderId: "150961726312",
+  appId: "1:150961726312:web:ad93b0d9926d78f5a6ecdd",
+  measurementId: "G-ZJN5KNKWTN"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
