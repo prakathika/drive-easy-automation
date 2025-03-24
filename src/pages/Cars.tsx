@@ -202,12 +202,12 @@ const Cars = () => {
     }
 
     // Apply transmission filter
-    if (selectedTransmission) {
+    if (selectedTransmission && selectedTransmission !== "all-transmission") {
       result = result.filter(car => car.transmission === selectedTransmission);
     }
 
     // Apply fuel type filter
-    if (selectedFuel) {
+    if (selectedFuel && selectedFuel !== "all-fuel") {
       result = result.filter(car => car.fuel === selectedFuel);
     }
 
@@ -334,7 +334,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Transmission" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Transmission</SelectItem>
+                      <SelectItem value="all-transmission">Any Transmission</SelectItem>
                       {transmissionTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -350,7 +350,7 @@ const Cars = () => {
                       <SelectValue placeholder="Any Fuel Type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Fuel Type</SelectItem>
+                      <SelectItem value="all-fuel">Any Fuel Type</SelectItem>
                       {fuelTypes.map((type) => (
                         <SelectItem key={type} value={type}>{type}</SelectItem>
                       ))}
@@ -362,14 +362,14 @@ const Cars = () => {
                 <div className="mb-6">
                   <Label className="text-sm font-medium mb-2 block">Seats</Label>
                   <Select 
-                    value={selectedSeats ? selectedSeats.toString() : ""} 
-                    onValueChange={(value) => setSelectedSeats(value ? parseInt(value) : null)}
+                    value={selectedSeats ? selectedSeats.toString() : "all-seats"} 
+                    onValueChange={(value) => setSelectedSeats(value === "all-seats" ? null : parseInt(value))}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Any Number of Seats" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any Number of Seats</SelectItem>
+                      <SelectItem value="all-seats">Any Number of Seats</SelectItem>
                       {seatOptions.map((option) => (
                         <SelectItem key={option} value={option.toString()}>{option} Seats</SelectItem>
                       ))}
